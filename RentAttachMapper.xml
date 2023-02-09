@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.jachmi.mapper.RentAttachMapper">
+ 	<insert id="insert">
+		insert into rent_attach(uuid,uploadPath,fileName,fileType,p_num )
+		values( #{uuid}, #{uploadPath}, #{fileName},  #{fileType},  #{p_num} )
+	</insert>
+	<delete id="delete">
+		delete from rent_attach where p_num = #{p_num}
+	</delete>
+	<select id="findByPnum" resultType="com.jachmi.domain.RentAttachVO">
+		select * from rent_attach where p_num = #{p_num}
+	</select>
+<!-- 	<select id="getAllImg" resultType="com.jachmi.domain.RentAttachVO">
+		SELECT a.p_category
+		     , b.filename
+		     , b.filetype
+		     , b.uploadpath
+		     , b.uuid
+		  FROM rent_attach b
+		 INNER JOIN product_owner a
+		    ON a.p_num = b.p_num
+		 WHERE a.p_category = #{p_category}
+	</select> -->
+ </mapper>
+ 

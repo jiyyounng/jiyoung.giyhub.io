@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.jachmi.mapper.RentInfoMapper">
+	<insert id="register" parameterType="com.jachmi.domain.RentInfoVO">
+		insert into rent_info (r_start,r_end,r_name,r_phone,r_email,p_num,payment,total_price)
+		values(
+			#{r_start},
+			#{r_end},
+			#{r_name},
+			#{r_phone},
+			#{r_email},
+			#{p_num},
+			'Y',
+			#{total_price}
+		)
+	</insert>
+	<select id="selectOne" resultType="com.jachmi.domain.RentInfoVO">
+		select * from rent_info where p_num=#{p_num}
+	</select>
+	<update id="updatePay" parameterType="com.jachmi.domain.RentInfoVO">
+		update rent_info
+		set
+			payment = 'Y'
+		where p_num=#{p_num}
+	</update>
+		<select id="selectY" resultType="com.jachmi.domain.RentInfoVO">
+		select * from rent_info where payment = 'Y'
+	</select>
+ </mapper>
+ 

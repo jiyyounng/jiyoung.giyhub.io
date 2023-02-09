@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.jachmi.mapper.RentMapper">
+	
+	<select id="getList" resultType="com.jachmi.domain.RentVO">
+		select product_owner.*,
+			   rent_info.payment 
+			   from product_owner
+			left join rent_info on product_owner.p_num=rent_info.p_num
+		where p_category=#{p_category}
+	 	<!-- <if test = "payment != null"> and payment = 'Y'</if>   -->
+	 	<!-- <if test = "value != 1 "> and payment = 'Y'</if>  -->
+	  	<!-- <if test = "value = 1 "> and payment is Null </if>  -->
+	</select>	
+	<insert id="register" parameterType="com.jachmi.domain.RentVO">
+		insert into product_owner
+		values(
+			product_seq.nextval, 
+			#{p_category}, 
+			#{p_title}, 
+			#{p_model}, 
+			#{p_content}, 
+			#{p_price}, 
+			#{p_start}, 
+			#{p_end},
+			sysdate,
+			#{region})
+	</insert>
+	<select id="getNum" resultType="int">	
+		select p_num FROM (SELECT p_num FROM product_owner order by product_owner.p_num desc) WHERE ROWNUM = 1
+	</select>
+	<select id="getCategory" resultType="int">	
+		select p_category FROM product_owner
+	</select>
+		<select id="read" resultType="com.jachmi.domain.RentVO">
+		select product_owner.*, rent_info.payment from product_owner
+			left join rent_info on product_owner.p_num=rent_info.p_num
+		where product_owner.p_num=#{p_num}
+	</select>
+	<update id="Update" parameterType="com.jachmi.domain.RentVO">
+		update product_owner
+		set
+			p_title = #{p_title},
+			p_model = #{p_model},
+			p_content = #{p_content},
+			p_price = #{p_price},
+			p_start = #{p_start},
+			p_end = #{p_end}
+		where p_num=#{p_num}
+	</update>
+	<delete id="remove">
+		delete from product_owner where p_num=#{p_num}
+	</delete>
+</mapper>
+ 
